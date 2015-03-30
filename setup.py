@@ -33,9 +33,10 @@ setup(
         'simpleobserver'
     ],
     tests_require=[
+        'nose',
         'mock',
         'timelib', 
         'python-dateutil'
     ],
-    test_suite='test_valipede'
+    test_suite='nosetests'
 )
