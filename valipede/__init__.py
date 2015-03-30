@@ -1,1 +1,2 @@
-from schema import *
+from .fields import *
+from .schema import *

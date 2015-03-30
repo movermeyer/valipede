@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name='valipede',
-	version="1.0.0",
+	version="1.0.1",
 	description='Data validation',
 	long_description=io.open('README.rst', mode='r', encoding='utf-8').read(),
 	classifiers=[
@@ -30,6 +30,7 @@ setup(
     license='MIT',
     packages=find_packages(),
     install_requires=[
+        'six',
         'simpleobserver'
     ],
     tests_require=[

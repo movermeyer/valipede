@@ -1,3 +1,4 @@
+import sys
 import unittest
 from mock import Mock
 from datetime import datetime
@@ -168,9 +169,10 @@ class TestText(unittest.TestCase):
         
         
     def test_not_utf8_fail(self):
-        field = Text()
-        with self.assertRaises(ValidationError):
-            field.validate('\xFF')
+        if sys.version < '3':
+            field = Text()
+            with self.assertRaises(ValidationError):
+                field.validate('\xFF')
         
         
 class TestEmail(unittest.TestCase):
@@ -251,7 +253,7 @@ class TestDateTime(unittest.TestCase):
         try:
             import timelib
         except ImportError:
-            print "timelib is not installed, skipping timelib test for DateTime field"
+            print("timelib is not installed, skipping timelib test for DateTime field")
             return
         
         field = DateTime(use_timelib=True, use_dateutil=False)
@@ -270,7 +272,7 @@ class TestDateTime(unittest.TestCase):
         try:
             import dateutil
         except ImportError:
-            print "dateutil is not installed, skipping dateutil test for DateTime field"
+            print("dateutil is not installed, skipping dateutil test for DateTime field")
             return
         
         field = DateTime(default_format="%d", use_timelib=False, use_dateutil=True)
@@ -609,8 +611,8 @@ class TestEnum(unittest.TestCase):
         """
         Shouldn't pass anything not in the defined list
         """
-        values = [5, "atilla the hun", unicode]
-        wrong = [8, "ivan the terrible", str]
+        values = [5, "atilla the hun", int]
+        wrong = [8, "ivan the terrible", float]
         
         field = Enum(*values)
         
@@ -622,7 +624,7 @@ class TestEnum(unittest.TestCase):
         """
         Should pass anything in the defined list
         """
-        values = [5, "atilla the hun", unicode]
+        values = [5, "atilla the hun", int]
         
         field = Enum(*values)
         
@@ -647,8 +649,8 @@ class TestTypeOf(unittest.TestCase):
         """
         Should pass values of the specified type
         """
-        field = TypeOf(basestring)
-        value = u"foo"
+        field = TypeOf(str)
+        value = "foo"
         
         try:
             self.assertEqual(value, field.validate(value))
@@ -729,7 +731,7 @@ class TestListOf(unittest.TestCase):
         that aren't lists.
         """
         bads = [23, [23,24,25]]
-        field = ListOf(TypeOf(basestring))
+        field = ListOf(TypeOf(str))
         
         for bad in bads:
             self.assertRaises(ValidationError, field.validate, bad)
@@ -745,7 +747,7 @@ class TestListOf(unittest.TestCase):
             ['pancakes', 'alpha centauri', 9]
         ]
         
-        field = ListOf(TypeOf(basestring, int))
+        field = ListOf(TypeOf(str, int))
         
         for good in goods:
             try:
