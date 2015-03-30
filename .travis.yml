@@ -3,7 +3,7 @@ python:
   - "2.7"
   - "3.4"
 
-install: "pip install coveralls nose"
+install: "pip install coveralls nose simpleobserver mock timelib python-dateutil"
 
 script:
   nosetests --with-coverage --cover-package=valipede
