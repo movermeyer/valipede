@@ -6,6 +6,7 @@ def validate(schema):
 		@wraps(fn)
 		def wrapper(*args, **kwargs):
 			options = schema.validate(kwargs)
-			return fn(options)
+			args = list(args) + [options]
+			return fn(*args)
 		return wrapper
 	return decorator

@@ -16,3 +16,13 @@ class TestDecorators(unittest.TestCase):
 		self.assertEquals(result, 23)
 		foo.assert_called_once_with({'things':'Hi there', 'stuff':5})
 		
+		
+	def test_validate_with_method(self):
+		class Foo(object):
+			@validate(Schema(stuff=Text()))
+			def bar(self, fields):
+				return fields['stuff']
+				
+		foo = Foo()
+		result = foo.bar(stuff='things')
+		self.assertEquals(result, 'things')

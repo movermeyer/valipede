@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name='valipede',
-	version="1.0.4",
+	version="1.0.5",
 	description='Data validation',
 	long_description=io.open('README.rst', mode='r', encoding='utf-8').read(),
 	classifiers=[
